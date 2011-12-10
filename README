@@ -1,0 +1,103 @@
+////////                      /////////
+/// Current status (Dec/2011)       ///
+/// initial 0.1-pre-alpha          ///
+//  Draft version NOT FOR PROD USE //
+///////                   /////////
+
+
+Push Mobile Engine is a fast and lightweigth tool to send notification to iOS or Androïd platforms through an asynchronous queue.
+It is based on beanstalkd : http://kr.github.com/beanstalkd/
+
+
+
+
+===========================
+Current status :
+
+Testing, only APNS is working for now.
+
+
+
+============================
+How it works :
+
+Simply consume a Beanstalk queue (produced by PHP, Ruby, Java... see beanstalkd page) and send it to Apple Notification Server or C2DM.
+
+Example :
+
+Assuming you have a beanstalk engine running on localhost, 
+
+Produce a message in PHP :
+
+<?
+
+
+require_once('libs/pheanstalk_init.php');
+
+$pheanstalk = new Pheanstalk('127.0.0.1');
+
+$Message[] = "xxxxxxxDEVICExxxxxxxTOKENxxxxxxxxxxxxxxxxxxxxx";
+$Message[] = "Notification from Push Mobile Engine";
+
+
+        $pheanstalk
+	        ->useTube('myAppTube')
+	        ->put(json_encode($apnsMessage));
+	
+?>
+
+And that's it ! Simple is beautifull.
+
+Now lets look at our consumer :
+
+We need a configuration (in this example, call it pme-myApp.ini) file containing this :
+
+[server]
+host = 127.0.0.1
+port = 11600
+tube = myAppTube
+
+[APNS]
+dev-mode = 0 ;choose 1 for sandbox
+rsa_key= /usr/local/etc/apns/foot/apn-dev-key.pem
+rsa_cert = /usr/local/etc/apns/foot/apn-dev-cert.pem
+
+
+[C2DM]
+mode = production ;choose this or "development"
+C2DM-user=xxxxxxxxxxxxxx
+C2DM-pass=xxxxxxxxxxxxxx
+C2DM-registration-id=your_registration
+
+
+You are now ready, you can produce as many consumer as you want, and lauch it this way :
+
+pmengine </path/to/your/pme-myApp.ini>
+
+
+================================
+INSTALLATION
+
+OK I want it and I want it NOW !
+Cool, here is what you need :
+
+A beanstakd server that you can get here : http://kr.github.com/beanstalkd/
+A job producer : You will find Java, Perl, Python, ... , and even .NET client here : https://github.com/kr/beanstalkd/wiki/client-libraries
+
+The C librairy to compile our pmEngine : http://github.com/bergundy/libbeanstalkclient/
+
+Then edit our Makefile to fit your environment, then type 
+
+$ ./configure
+$ make
+$ make install
+
+...and that should rock.
+
+==============================
+HELP
+
+Sorry I don't have much time to help, anyway, feel free to ask for improvements, fork it, and play with it.
+This software come with no waranty at all. 
+If you need help, assistance, special improvement, you can hire contact me at  seb @ jallot.org
+ 
