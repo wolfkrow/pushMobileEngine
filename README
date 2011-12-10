@@ -59,12 +59,12 @@ tube = myAppTube
 
 [APNS]
 dev-mode = 0 ;choose 1 for sandbox
-rsa_key= /usr/local/etc/apns/foot/apn-dev-key.pem
-rsa_cert = /usr/local/etc/apns/foot/apn-dev-cert.pem
+rsa_key= /usr/local/etc/apns/myApp/apn-dev-key.pem
+rsa_cert = /usr/local/etc/apns/myApp/apn-dev-cert.pem
 
 
 [C2DM]
-mode = production ;choose this or "development"
+dev-mode = 0 ;choose 1 for sandbox
 C2DM-user=xxxxxxxxxxxxxx
 C2DM-pass=xxxxxxxxxxxxxx
 C2DM-registration-id=your_registration
@@ -72,7 +72,7 @@ C2DM-registration-id=your_registration
 
 You are now ready, you can produce as many consumer as you want, and lauch it this way :
 
-pmengine </path/to/your/pme-myApp.ini>
+PMEngined </path/to/your/pme-myApp.ini>
 
 
 ================================
@@ -86,13 +86,15 @@ A job producer : You will find Java, Perl, Python, ... , and even .NET client he
 
 The C librairy to compile our pmEngine : http://github.com/bergundy/libbeanstalkclient/
 
-Then edit our Makefile to fit your environment, then type 
+Then you probably are used to, type 
 
 $ ./configure
 $ make
 $ make install
 
-...and that should rock.
+...and that should rock. 
+
+If it does (or not), please report !
 
 ==============================
 HELP
