@@ -121,14 +121,14 @@ int main(int argc, char **argv)
 	 globalApns->port = APPLE_PORT;
 	  
 	  
- /*  */
+ /*  
 	googleTockeniD = getAuthTocken ("", "", "PMEngine" );
 	
 	syslog (LOG_NOTICE, "[Google Process] %s", googleTockeniD);
 	
-    syslog (LOG_NOTICE, "[Main Process] Contacting host %s port %s tube %s", host, port, tube);
+        syslog (LOG_NOTICE, "[Main Process] Contacting host %s port %s tube %s", host, port, tube);
 
-  //*//   
+ */   
    
    
    listenToTube(tube); //This will loop forever
